@@ -1,18 +1,15 @@
-import { IsNotEmpty, IsString, IsNumber, Max, Min } from 'class-validator';
+import { IsNotEmpty, IsString, MaxLength, MinLength } from 'class-validator';
 export class CreateTaskDto {
-  @IsNumber()
-  id: number;
-
   @IsNotEmpty()
   @IsString()
-  @Min(5)
-  @Max(20)
+  @MinLength(5, { message: 'El titulo debe ser mayor a 5 caracteres' })
+  @MaxLength(20)
   title: string;
 
   @IsNotEmpty()
   @IsString()
-  @Min(5)
-  @Max(300)
+  @MinLength(5)
+  @MaxLength(300)
   description: string;
 
   state: string;
