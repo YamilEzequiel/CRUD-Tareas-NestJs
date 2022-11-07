@@ -1,4 +1,5 @@
 import { Sequelize } from 'sequelize-typescript';
+import { Task } from 'src/models/task/entities/task.entity';
 
 export const databaseProviders = [
   {
@@ -12,7 +13,7 @@ export const databaseProviders = [
         password: '',
         database: 'nestjs_tareas',
       });
-      sequelize.addModels([]);
+      sequelize.addModels([Task]);
       await sequelize.sync();
       return sequelize;
     },
