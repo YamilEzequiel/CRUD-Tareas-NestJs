@@ -3,9 +3,12 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
+  Res,
+  HttpStatus,
+  NotFoundException,
+  Put,
 } from '@nestjs/common';
 import { TaskService } from './task.service';
 import { CreateTaskDto } from './dto/create-task.dto';
@@ -26,17 +29,36 @@ export class TaskController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.taskService.findOne(+id);
+  async findOne(@Param('id') id: string, @Res() res) {
+    const task = await this.taskService.findOne(+id);
+    if (task == null) throw new NotFoundException('No se encontro la tarea');
+    return res.status(HttpStatus.OK).json({
+      message: 'Tarea encontrada',
+      data: task,
+    });
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto) {
-    return this.taskService.update(+id, updateTaskDto);
+  @Put(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() updateTaskDto: UpdateTaskDto,
+    @Res() res,
+  ) {
+    const updateTask = await this.taskService.update(+id, updateTaskDto);
+    if (updateTask == null) throw new NotFoundException('La tarea no existe');
+    return res.status(HttpStatus.OK).json({
+      message: 'Tarea actualizada',
+      data: updateTask,
+    });
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.taskService.remove(+id);
+  async remove(@Param('id') id: string, @Res() res) {
+    const removeTask = await this.taskService.remove(+id);
+    if (removeTask == null) throw new NotFoundException('La tarea no existe');
+    return res.status(HttpStatus.OK).json({
+      message: 'Tarea eliminada',
+      data: removeTask,
+    });
   }
 }

@@ -15,7 +15,7 @@ export class TaskService {
   }
 
   async findAll() {
-    return await this.findAll();
+    return await this.taskRepository.findAll();
   }
 
   async findOne(id: number) {
@@ -23,11 +23,12 @@ export class TaskService {
   }
 
   async update(id: number, updateTaskDto: UpdateTaskDto) {
-    return 'null';
+    const task = await this.findOne(id);
+    return task ? await task.update({ ...updateTaskDto }) : null;
   }
 
   async remove(id: number) {
-    const user = await this.findOne(id);
-    await user.destroy();
+    const task = await this.findOne(id);
+    return task ? await task.destroy() : null;
   }
 }
