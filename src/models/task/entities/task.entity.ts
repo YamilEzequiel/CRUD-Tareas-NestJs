@@ -6,7 +6,7 @@ export class Task extends Model {
   title: string;
 
   @Column
-  description: number;
+  description: string;
 
   @Default('Active')
   @Column
