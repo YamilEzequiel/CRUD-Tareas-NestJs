@@ -15,7 +15,9 @@ export class TaskService {
   }
 
   async findAll() {
-    return await this.taskRepository.findAll();
+    return await this.taskRepository.findAll({
+      order: [['updatedAt', 'DESC']],
+    });
   }
 
   async findOne(id: number) {
