@@ -1,4 +1,4 @@
-import { Table, Column, Model } from 'sequelize-typescript';
+import { Table, Column, Model, Default } from 'sequelize-typescript';
 
 @Table
 export class Task extends Model {
@@ -8,9 +8,11 @@ export class Task extends Model {
   @Column
   description: number;
 
+  @Default('Active')
   @Column
   state: string;
 
+  @Default('All')
   @Column
-  category: number;
+  category: string;
 }

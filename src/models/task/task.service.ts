@@ -22,6 +22,10 @@ export class TaskService {
     return await this.taskRepository.findOne({ where: { id } });
   }
 
+  async findCategory(category: string) {
+    return await this.taskRepository.findAndCountAll({ where: { category } });
+  }
+
   async update(id: number, updateTaskDto: UpdateTaskDto) {
     const task = await this.findOne(id);
     return task ? await task.update({ ...updateTaskDto }) : null;

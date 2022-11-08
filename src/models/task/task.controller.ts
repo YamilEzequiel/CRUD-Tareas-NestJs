@@ -28,6 +28,17 @@ export class TaskController {
     return this.taskService.findAll();
   }
 
+  @Get('category/:category')
+  async findCategory(@Param('category') category: string, @Res() res) {
+    const tasks = await this.taskService.findCategory(category);
+    if (tasks == null)
+      throw new NotFoundException('No hay tareas con esa categoria');
+    return res.status(HttpStatus.OK).json({
+      message: 'Tareas encontrada',
+      data: tasks,
+    });
+  }
+
   @Get(':id')
   async findOne(@Param('id') id: string, @Res() res) {
     const task = await this.taskService.findOne(+id);
