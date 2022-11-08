@@ -8,6 +8,7 @@ async function bootstrap() {
 
   //Swagger
   app.useGlobalPipes(new ValidationPipe());
+  app.enableCors();
   const config = new DocumentBuilder()
     .setTitle('API Tareas')
     .setDescription('CRUD simple de tareas')
